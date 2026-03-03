@@ -1,0 +1,83 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard | AgroVision AI</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav>
+    <h2>🌱 AgroVision AI</h2>
+    <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="upload.html">Upload</a></li>
+        <li><a href="dashboard.html" class="active">Dashboard</a></li>
+        <li><a href="history.html">History</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+    </ul>
+</nav>
+
+<section class="dashboard-section">
+    <h1>Analytics Dashboard</h1>
+    <p>Overview of crop health predictions</p>
+
+    <div class="stats-container">
+        <div class="stat-card">
+            <h3>Total Predictions</h3>
+            <p id="totalPredictions">0</p>
+        </div>
+        <div class="stat-card">
+            <h3>Healthy Crops</h3>
+            <p id="healthyCount">0</p>
+        </div>
+        <div class="stat-card">
+            <h3>Diseased Crops</h3>
+            <p id="diseasedCount">0</p>
+        </div>
+    </div>
+
+    <div class="chart-container">
+        <canvas id="predictionChart"></canvas>
+    </div>
+</section>
+
+<script src="script.js"></script>
+<script>
+    // Update dashboard dynamically from localStorage
+    const history = JSON.parse(localStorage.getItem("history")) || [];
+
+    const healthy = history.filter(h => h.disease === "Healthy").length;
+    const diseased = history.filter(h => h.disease !== "Healthy").length;
+    const total = history.length;
+
+    document.getElementById("totalPredictions").innerText = total;
+    document.getElementById("healthyCount").innerText = healthy;
+    document.getElementById("diseasedCount").innerText = diseased;
+
+    const ctx = document.getElementById('predictionChart').getContext('2d');
+    new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: ['Healthy', 'Diseased'],
+            datasets: [{
+                data: [healthy, diseased],
+                backgroundColor: ['#4caf50', '#f44336']
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: { position: 'bottom' },
+                title: { display: true, text: 'Crop Health Overview' }
+            }
+        }
+    });
+</script>
+
+</body>
+</html>

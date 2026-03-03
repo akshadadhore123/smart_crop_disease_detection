@@ -1,0 +1,68 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Detection Result | AgroVision AI</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- NAVBAR -->
+    <nav class="navbar">
+        <div class="logo">🌾 AgroVision AI</div>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="upload.html">Upload</a></li>
+            <li><a href="dashboard.html">Dashboard</a></li>
+            <li><a href="history.html">History</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="contact.html">Contact</a></li>
+        </ul>
+    </nav>
+
+    <!-- RESULT SECTION -->
+    <section class="result-section">
+        <h1>Crop Disease Detection Result</h1>
+
+        <div class="result-container">
+
+            <div class="image-preview">
+                <h3>Uploaded Image:</h3>
+                <img id="previewImage" src="" alt="Crop Image">
+            </div>
+
+            <div class="result-details">
+                <h3>Disease: <span id="disease"></span></h3>
+                <h3>Confidence: <span id="confidence"></span></h3>
+                <p><strong>Cause:</strong> <span id="cause"></span></p>
+                <p><strong>Organic Treatment:</strong> <span id="organicTreatment"></span></p>
+                <p><strong>Chemical Treatment:</strong> <span id="chemicalTreatment"></span></p>
+            </div>
+
+        </div>
+
+        <div class="back-upload">
+            <a href="upload.html" class="btn-primary">🔄 Detect Another Image</a>
+        </div>
+    </section>
+
+    <script src="script.js"></script>
+    <script>
+        // Auto-fill result from localStorage if available
+        document.addEventListener("DOMContentLoaded", function() {
+            const history = JSON.parse(localStorage.getItem("history")) || [];
+            if(history.length > 0) {
+                const last = history[0]; // latest prediction
+                document.getElementById("previewImage").src = last.image;
+                document.getElementById("disease").innerText = last.disease;
+                document.getElementById("confidence").innerText = last.confidence;
+                document.getElementById("cause").innerText = last.cause || "";
+                document.getElementById("organicTreatment").innerText = last.organicTreatment || "";
+                document.getElementById("chemicalTreatment").innerText = last.chemicalTreatment || "";
+            }
+        });
+    </script>
+
+</body>
+</html>

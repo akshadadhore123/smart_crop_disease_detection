@@ -1,0 +1,111 @@
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Contact | AgroVision AI</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav>
+    <h2>🌱 AgroVision AI</h2>
+    <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="upload.html">Upload</a></li>
+        <li><a href="dashboard.html">Dashboard</a></li>
+        <li><a href="history.html">History</a></li>
+        <li><a href="about.html">About</a></li>
+        <li><a href="contact.html">Contact</a></li>
+    </ul>
+</nav>
+
+<!-- CONTACT SECTION -->
+<section class="contact-section">
+
+    <div class="contact-container">
+
+        <h1>Get In Touch</h1>
+        <p class="contact-subtext">
+            Have questions about AgroVision AI?  
+            We would love to hear from you.
+        </p>
+
+        <!-- CONTACT FORM -->
+        <form id="contactForm" class="contact-form">
+
+            <div class="form-group">
+                <input type="text" id="name" placeholder="Full Name" required>
+            </div>
+
+            <div class="form-group">
+                <input type="email" id="email" placeholder="Email Address" required>
+            </div>
+
+            <div class="form-group">
+                <textarea id="message" rows="5" placeholder="Your Message" required></textarea>
+            </div>
+
+            <button type="submit" class="btn-primary">Send Message</button>
+
+        </form>
+
+        <!-- SUCCESS MESSAGE -->
+        <div id="successMessage" class="success-message">
+            ✅ Message sent successfully!
+        </div>
+
+        <!-- SOCIAL LINKS -->
+        <div class="social-section">
+            <h3>Connect With Us</h3>
+            <div class="social-links">
+                <a href="#">🌐 Website</a>
+                <a href="#">💼 LinkedIn</a>
+                <a href="#">📧 Email</a>
+            </div>
+        </div>
+
+    </div>
+
+</section>
+
+<footer>
+    © 2026 AgroVision AI | Smart Agriculture Innovation
+</footer>
+
+<script src="script.js"></script>
+
+<script>
+const API_URL = "http://localhost:5000";
+
+document.getElementById("contactForm").addEventListener("submit", async function(e) {
+    e.preventDefault();
+
+    const name = document.getElementById("name").value;
+    const email = document.getElementById("email").value;
+    const message = document.getElementById("message").value;
+
+    try {
+        const response = await fetch(`${API_URL}/contact`, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ name, email, message })
+        });
+
+        if(response.ok){
+            document.getElementById("successMessage").style.display = "block";
+            document.getElementById("contactForm").reset();
+        }
+
+    } catch(error) {
+        console.log("Contact Error:", error);
+    }
+});
+</script>
+
+</body>
+</html>
